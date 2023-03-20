@@ -48,7 +48,16 @@ exports.checkAccountPayload = (req, res, next) => {
 
 exports.checkAccountNameUnique = async (req, res, next) => {
   try {
-    const existing = await db('accounts').where('name', req.body.name.trim())
+    const existing = await db('accounts')
+      .where('name', req.body.name.trim())
+      .first()
+
+      if(existing) { //<< if exisitng is truthy then that means that is the sad path
+        next({status: 400, message: 'that name is taken'})
+      } else {
+        next()
+      }
+
     //This above line ^^^ is checking to see if the name in the request body already exists inside the database
     //so, this middlware is actually reaching out to the db and checking around
     //for if that name already exisits.
