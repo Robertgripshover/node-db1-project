@@ -13,13 +13,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', midWare.checkAccountId, (req, res, next) => {
-  // DO YOUR MAGIC
-  try {
-      res.json('get account by id')
-  } catch (err) {
-    next(err)
-  }
+router.get('/:id', midWare.checkAccountId, async (req, res, next) => {
+  res.json(req.account) //all the code below is not needed since the checkAccountId middleware is doing all that work
+  // try {
+  //   const account = await Account.getAll(req.params.id)
+  //   res.json(account)
+  // } catch (err) {
+  //   next(err)
+  // }
 })
 
 router.post('/', midWare.checkAccountPayload, midWare.checkAccountNameUnique, (req, res, next) => {
