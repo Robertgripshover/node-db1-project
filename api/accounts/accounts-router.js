@@ -14,16 +14,23 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', midWare.checkAccountId, async (req, res, next) => {
-  res.json(req.account) //all the code below is not needed since the checkAccountId middleware is doing all that work
+  res.json(req.account)
+  //all the code below is not needed since the checkAccountId 
+  //middleware is doing all that work
   // try {
   //   const account = await Account.getAll(req.params.id)
   //   res.json(account)
   // } catch (err) {
   //   next(err)
   // }
+  //^^^ Therefore the above code that I have commented out is not
+  //needed becuase the middlware is doing it all
 })
 
-router.post('/', midWare.checkAccountPayload, midWare.checkAccountNameUnique, (req, res, next) => {
+router.post('/',
+  midWare.checkAccountPayload,
+  midWare.checkAccountNameUnique,
+  (req, res, next) => {
   // DO YOUR MAGIC
   try {
       res.json('post account')
@@ -32,7 +39,11 @@ router.post('/', midWare.checkAccountPayload, midWare.checkAccountNameUnique, (r
   }
 })
 
-router.put('/:id', midWare.checkAccountId, midWare.checkAccountPayload, midWare.checkAccountId, (req, res, next) => {
+router.put('/:id',
+  midWare.checkAccountId,
+  midWare.checkAccountPayload,
+  midWare.checkAccountId,
+  (req, res, next) => {
   // DO YOUR MAGIC
   try {
       res.json('update account')
