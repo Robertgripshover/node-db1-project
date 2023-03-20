@@ -31,7 +31,6 @@ router.post('/',
   midWare.checkAccountPayload,
   midWare.checkAccountNameUnique,
   (req, res, next) => {
-  // DO YOUR MAGIC
   try {
       res.json('post account')
   } catch (err) {

@@ -2,6 +2,9 @@
 const Account = require('./accounts-model') 
 
 
+const db = require('../../data/db-config')
+
+
 exports.checkAccountPayload = (req, res, next) => {
   const errorMessage = { status: 400 } //sending back the status code
   const { name, budget } = req.body //descruturing out the name and budget from the body of the request
@@ -41,9 +44,20 @@ exports.checkAccountPayload = (req, res, next) => {
   
 }
 
-exports.checkAccountNameUnique = (req, res, next) => {
-  next()
+
+
+exports.checkAccountNameUnique = async (req, res, next) => {
+  try {
+    const existing = await db('accounts').where('name', req.body.name.trim())
+    //This above line ^^^ is checking to see if the name in the request body already exists inside the database
+    //so, this middlware is actually reaching out to the db and checking around
+    //for if that name already exisits.
+  } catch (err) {
+      next(err)
+  }
 }
+
+
 
 exports.checkAccountId = async (req, res, next) => {
   try {
